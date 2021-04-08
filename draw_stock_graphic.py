@@ -26,17 +26,6 @@ conf.update({'web_url':"http://push2ex.eastmoney.com/getStockFenShi?pagesize=100
 
 def get_data():
 
-    def get_realtime_stock_data(id):
-        '''
-            获取东方财富的实时数据，传入参数为股票id，id包含code和market
-        '''
-        code = id[:-1]
-        market = id[-1]
-        #东方财富分时数据
-        data_url = "http://push2ex.eastmoney.com/getStockFenShi?pagesize=1000000&ut=7eea3edcaed734bea9cbfc24409ed989&dpt=wzfscj&pageindex=0&id=%s&sort=1&ft=1&code=%s&market=%s"%(id,code,market)
-        data = get_url_data(data_url)
-        return data
-
     def get_data_from_txt(fp):
         '''
         从txt文件(从东方财富web获取的数据转存到txt)里获取数据，并转化成字典，形如{price1：[value1，value2...],price2：[value1，value2...]...}
