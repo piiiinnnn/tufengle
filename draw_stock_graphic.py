@@ -16,7 +16,7 @@ today = time.strftime("%Y-%m-%d", time.localtime())
 
 conf = {
         'sid':'6016581',
-        'ios':1,#plt的交互开关
+        'ion':1,#plt的交互开关
         'method':1, #数去获取方式，0是从file_path，1是从web_url
         'file_path':r'C:\Users\capta\Desktop\6016181(中国中冶).txt',
         'web_url':""
@@ -134,7 +134,6 @@ def plan_b():
 
     plt.bar(x,y,color = [color(i) for i in y])
     plt.show()
-plan_a()
 if __name__ == '__main__':
     if conf['ion']==1:
         plan_a()
