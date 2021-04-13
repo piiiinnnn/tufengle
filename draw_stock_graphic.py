@@ -15,8 +15,8 @@ font = FontProperties(fname=r"C:\Windows\Fonts\simhei.ttf", size=14)
 today = time.strftime("%Y-%m-%d", time.localtime())
 
 conf = {
-        'sid':'6016581',
-        'ion':1,#plt的交互开关
+        'sid':'6039931',
+        'ios':1,#plt的交互开关
         'method':1, #数去获取方式，0是从file_path，1是从web_url
         'file_path':r'C:\Users\capta\Desktop\6016181(中国中冶).txt',
         'web_url':""
@@ -41,7 +41,7 @@ def get_data():
                 p = str(i['p'])
                 v = i['v']
                 bs = i['bs']
-                v = v if bs==1 else 0-v
+                v = 0-v if bs==1 else v
                 if t >= 93000:
                     if p not in price_vol_table.keys():
                         price_vol_table.update({p:[v]})
@@ -78,11 +78,11 @@ def get_data():
 
 def color(i):
     if i<0:
-        return 'g'
+        return '#00ab69'
     elif i==0:
-        return 0.5
+        return 'gray'
     else:
-        return 'r'
+        return '#f12555'
 def plan_a():
     # 交互循环
     history_y = []
@@ -100,15 +100,15 @@ def plan_a():
         if not history_y:
             history_y = [sum(price_vol_table[i]) for i in x]
         y = [sum(price_vol_table[i]) for i in x]
-        diff_y  = list(map(lambda x: x[0]-x[1], zip(y, history_y)))
-        history_y = y
-        # print(history_y,y,diff_y)
+        maggin = int((max(y)-min(y))*2/600)
+        # diff_y  = list(map(lambda x: x[0]-x[1], zip(y, history_y)))
+        # history_y = y
         plt.bar(x,y,color = [color(i) for i in y])
-        for x,y,z in zip(x,y,diff_y):
-            delta = 200
-            y = y+delta if y>0 else y-delta-2000
-            plt.text(x,y,y,fontsize=7,ha='center')
+        for x,y in zip(x,y):
+            text_local_y = y+maggin if y>0 else y-maggin*8
+            plt.text(x,text_local_y,y,fontsize=7,ha='center')
         plt.draw()
+        
         plt.pause(3)
 def plan_b():
     #无交互无循环
@@ -123,8 +123,9 @@ def plan_b():
 
     plt.bar(x,y,color = [color(i) for i in y])
     plt.show()
+# plan_a()
 if __name__ == '__main__':
-    if conf['ion']==1:
+    if conf['ios']==1:
         plan_a()
     else:
         plan_b()
